@@ -56,6 +56,7 @@ namespace twozerofoureight
                     l.BackColor = Color.Green;
                     break;
             }
+
         }
         private void UpdateBoard(int[,] board)
         {
@@ -75,6 +76,19 @@ namespace twozerofoureight
             UpdateTile(lbl31,board[3, 1]);
             UpdateTile(lbl32,board[3, 2]);
             UpdateTile(lbl33,board[3, 3]);
+
+            //Update lblScore with summation of all number in the board.
+            int summation = 0;
+            for (int row = 0; row < 4; row++)
+            {
+                for (int column = 0; column < 4; column++)
+                {
+                    summation += Convert.ToInt32(board[row, column]);
+                }
+            }
+
+            lblScore.Text = Convert.ToString(summation);
+
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
