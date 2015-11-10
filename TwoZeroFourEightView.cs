@@ -12,23 +12,16 @@ namespace twozerofoureight
 {
     public partial class TwoZeroFourEightView : Form, View
     {
-        public int summation = 0;
+        TwoZeroFourEightScoreView scoreView = new TwoZeroFourEightScoreView();
         Model model;
         Controller controller;
-
-        Score showScore = new Score();
-
-        public int Pass
-        {
-            get { return summation; }
-            set { summation = value; }
-        }
 
         public TwoZeroFourEightView()
         {
             InitializeComponent();
             model = new TwoZeroFourEightModel();
             model.AttachObserver(this);
+            model.AttachObserver(scoreView);
             controller = new TwoZeroFourEightController();
             controller.AddModel(model);
             controller.ActionPerformed(TwoZeroFourEightController.LEFT);
@@ -37,10 +30,15 @@ namespace twozerofoureight
         public void Notify(Model m)
         {
             UpdateBoard(((TwoZeroFourEightModel)m).GetBoard());
-            UpdateScore(((TwoZeroFourEightModel)m).GetBoard());
+            //UpdateScore(((TwoZeroFourEightModel)m).GetBoard());
             UpdateScore_Form(((TwoZeroFourEightModel)m).GetBoard());
+            int r = ((TwoZeroFourEightModel)m).getScore();
+            lblScore.Text = r.ToString();
+            scoreView.Show();
         }
 
+        // Dump this function: 
+        /*
         private void UpdateScore(int[,] board)
         {
             int bScore = 0;
@@ -53,7 +51,10 @@ namespace twozerofoureight
             }
             lblScore.Text = Convert.ToString(bScore);
         }
+        */
 
+        //dump
+        /*
         private void UpdateScore_Form(int[,] board)
         {
             int bScore = 0;
@@ -65,10 +66,8 @@ namespace twozerofoureight
                 }
             }
 
-            showScore.F2Score.Text = Convert.ToString(bScore);
-            showScore.Visible = true;
         }
-
+        */
         private void UpdateTile(Label l, int i)
         {
             if (i != 0)
@@ -118,8 +117,9 @@ namespace twozerofoureight
             UpdateTile(lbl32, board[3, 2]);
             UpdateTile(lbl33, board[3, 3]);
 
-            //Update lblScore with summation of all number in the board.
-
+            //Dump, import value from model instead  
+            //:Update lblScore with summation of all number in the board.
+            /*
             for (int row = 0; row < 4; row++)
             {
                 for (int column = 0; column < 4; column++)
@@ -128,7 +128,8 @@ namespace twozerofoureight
                 }
             }
 
-            lblScore.Text = Convert.ToString(summation);
+            lblScore.Text = Convert.ToString(summation); 
+            */
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
